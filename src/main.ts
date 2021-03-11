@@ -1,5 +1,5 @@
-import core from '@actions/core';
-import crypto from 'crypto';
+import * as core from '@actions/core';
+import * as crypto from 'crypto';
 
 import { AzureAppService } from 'azure-actions-appservice-rest/Arm/azure-app-service';
 import { AzureAppServiceUtility } from 'azure-actions-appservice-rest/Utilities/AzureAppServiceUtility';
