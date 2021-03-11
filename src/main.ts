@@ -60,34 +60,32 @@ export class AzAppSettings {
     }
 
     async run() {
-        if (this.prefix.length > 0) {
-            const appService = await this.getAppService();
+        const appService = await this.getAppService();
 
-            const appSettingsReader = new AppSettingsEnvironmentParser(this.prefix, this.slotName);
-            const parsedAppSettings = appSettingsReader.parse();
+        const appSettingsReader = new AppSettingsEnvironmentParser(this.prefix, this.slotName);
+        const parsedAppSettings = appSettingsReader.parse();
 
-            var builder = new AppSettingsBuilder();
-            let newAppConfiguration: AppConfiguration = {};
-            if (parsedAppSettings && parsedAppSettings.appSettings.newSettings && parsedAppSettings.appSettings.newSettings.length > 0) {
-                newAppConfiguration = builder.buildNewAppSettings(this.file, parsedAppSettings.appSettings.newSettings);
-            }
+        var builder = new AppSettingsBuilder();
+        let newAppConfiguration: AppConfiguration = {};
+        if (parsedAppSettings && parsedAppSettings.appSettings.newSettings && parsedAppSettings.appSettings.newSettings.length > 0) {
+            newAppConfiguration = builder.buildNewAppSettings(this.file, parsedAppSettings.appSettings.newSettings);
+        }
 
-            var removedAppSettings: object = {};
-            if (parsedAppSettings && parsedAppSettings.appSettings.removedSettings && parsedAppSettings.appSettings.removedSettings.length > 0) {
-                var currentAppSettings = await appService.getApplicationSettings();
-                var existingAppSettings = this.convertToAppSettings(currentAppSettings.properties);
-                removedAppSettings = builder.buildAppSettingRemovals(existingAppSettings, parsedAppSettings.appSettings.removedSettings);
-            }
+        var removedAppSettings: object = {};
+        if (parsedAppSettings && parsedAppSettings.appSettings.removedSettings && parsedAppSettings.appSettings.removedSettings.length > 0) {
+            var currentAppSettings = await appService.getApplicationSettings();
+            var existingAppSettings = this.convertToAppSettings(currentAppSettings.properties);
+            removedAppSettings = builder.buildAppSettingRemovals(existingAppSettings, parsedAppSettings.appSettings.removedSettings);
+        }
 
-            core.debug('---AppSettings to be created/updated---');
-            core.debug(JSON.stringify(newAppConfiguration));
+        core.debug('---AppSettings to be created/updated---');
+        core.debug(JSON.stringify(newAppConfiguration));
 
-            core.debug('---AppSettings to be removed---');
-            core.debug(JSON.stringify(removedAppSettings));
+        core.debug('---AppSettings to be removed---');
+        core.debug(JSON.stringify(removedAppSettings));
 
-            if (newAppConfiguration.appSettings) {
-                await this.updateAppServiceAppSettings(appService, newAppConfiguration.appSettings, removedAppSettings);
-            }
+        if (newAppConfiguration.appSettings) {
+            await this.updateAppServiceAppSettings(appService, newAppConfiguration.appSettings, removedAppSettings);
         }
     }
 
