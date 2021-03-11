@@ -1,4 +1,4 @@
-import * as core from "@actions/core";
+import * as core from '@actions/core';
 import * as fs from 'fs';
 import { AppConfiguration, AppSetting } from '../main';
 
