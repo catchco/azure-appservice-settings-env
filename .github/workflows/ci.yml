@@ -1,0 +1,26 @@
+name: 'Build and test'
+
+on:
+  workflow-dispatch:
+  pull_request:
+    branches: [ 'main', 'develop' ]
+
+jobs:
+  build_and_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: "Execute build"
+        run: |
+          npm install
+          npm run build
+
+      - name: "Execute tests"
+        run: |
+          npm run tests

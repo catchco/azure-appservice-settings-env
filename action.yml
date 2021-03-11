@@ -1,0 +1,18 @@
+name: "Azure App Service Settings from Environment"
+description: "Update Azure App Service settings file from environment variables"
+inputs:
+  file:
+    description: 'File to substitute variable values for environment values'
+    required: true
+  appname:
+    description: 'Name of the Azure Web App'
+    required: true
+  slotname:
+    description: 'Name of an existing slot other than the production slot. Default value is production'
+    required: false
+  prefix:
+    description: 'The prefix of the environment variables that will be used to set the app settings'
+    required: false    
+runs:
+  using: 'node12'
+  main: 'lib/main.js'
