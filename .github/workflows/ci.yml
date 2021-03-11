@@ -1,7 +1,7 @@
 name: 'Build and test'
 
 on:
-  workflow-dispatch:
+  workflow_dispatch:
   pull_request:
     branches: [ 'main', 'develop' ]
 
@@ -23,4 +23,4 @@ jobs:
 
       - name: "Execute tests"
         run: |
-          npm run tests
+          npm run test
