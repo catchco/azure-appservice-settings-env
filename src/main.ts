@@ -44,7 +44,7 @@ export interface ConfigurationSettings {
     webSocketsEnabled?: boolean;
 }
 
-var initialAgentString = !!process.env.AZURE_HTTP_USER_AGENT ? `${process.env.AZURE_HTTP_USER_AGENT}` : "";
+const initialAgentString = !!process.env.AZURE_HTTP_USER_AGENT ? `${process.env.AZURE_HTTP_USER_AGENT}` : "";
 
 export class AzAppSettings {
     file: string;
@@ -65,16 +65,16 @@ export class AzAppSettings {
         const appSettingsReader = new AppSettingsEnvironmentParser(this.prefix, this.slotName);
         const parsedAppSettings = appSettingsReader.parse();
 
-        var builder = new AppSettingsBuilder();
+        const builder = new AppSettingsBuilder();
         let newAppConfiguration: AppConfiguration = {};
         if (parsedAppSettings && parsedAppSettings.appSettings.newSettings && parsedAppSettings.appSettings.newSettings.length > 0) {
             newAppConfiguration = builder.buildNewAppSettings(this.file, parsedAppSettings.appSettings.newSettings);
         }
 
-        var removedAppSettings: object = {};
+        let removedAppSettings: object = {};
         if (parsedAppSettings && parsedAppSettings.appSettings.removedSettings && parsedAppSettings.appSettings.removedSettings.length > 0) {
-            var currentAppSettings = await appService.getApplicationSettings();
-            var existingAppSettings = this.convertToAppSettings(currentAppSettings.properties);
+            const currentAppSettings = await appService.getApplicationSettings();
+            const existingAppSettings = this.convertToAppSettings(currentAppSettings.properties);
             removedAppSettings = builder.buildAppSettingRemovals(existingAppSettings, parsedAppSettings.appSettings.removedSettings);
         }
 
