@@ -2,10 +2,10 @@
   "name": "az-appsettings-from-env",
   "version": "1.0.0",
   "description": "GitHub Action using environment variables to configure Azure App Service settings",
-  "main": "lib/main.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest --passWithNoTests --testTimeout 10000",
-    "build": "tsc"
+    "build": "ncc build ./src/main.ts --license licenses.txt"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "action",
     "utility"
   ],
-  "author": "Josh Rogers <jrogers@catchco.com>",
+  "author": "Josh Rogers <josh.rogers@catchco.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/joshlrogers/az-appsettings-from-env/issues"
