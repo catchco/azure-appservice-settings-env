@@ -3,12 +3,7 @@ import fs from 'fs';
 import { AppConfiguration, AppSetting } from '../main';
 import { AppSettingsBuilder } from '../utilities/appsettings-builder';
 
-jest.mock('fs', () => ({
-    promises: {
-        access: jest.fn()
-    },
-    readFileSync: jest.fn()
-}));
+jest.mock('fs');
 jest.mock('@actions/core');
 
 describe('app settings builder', () => {
@@ -71,7 +66,7 @@ describe('app settings builder', () => {
 
     describe('new app settings', () => {
 
-        describe('bad property casing', () => {
+        describe('bad property casing', () => { 
             const builder: AppSettingsBuilder = new AppSettingsBuilder();
             let existingAppSettings: AppSetting[];
             let environmentAppSettings: AppSetting[];
@@ -140,8 +135,8 @@ describe('app settings builder', () => {
                 (core.warning as jest.Mock).mockImplementation(cb => {
                     logWarning = cb;
                 });
-
-                const result = builder.buildNewAppSettings('file.json', environmentAppSettings);
+                
+                const result = builder.buildNewAppSettings('file.json', environmentAppSettings);                
 
                 expect(logWarning).toBe('An appSettings property was not found on the configuration object. If this was intentional you may ignore this warning, otherwise please check the casing of your property names.')
             })
