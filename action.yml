@@ -14,5 +14,5 @@ inputs:
     description: 'The prefix of the environment variables that will be used to set the app settings'
     required: false    
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'lib/main.js'
